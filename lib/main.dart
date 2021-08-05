@@ -8,6 +8,7 @@ void main() {
   runApp(GetMaterialApp(
     initialRoute: '/',
     theme: admin,
+    debugShowCheckedModeBanner: false,
     getPages: [
       GetPage(name: '/', page: () => LoginPage(),),
       GetPage(name: '/home', page: () => HomePage(),),

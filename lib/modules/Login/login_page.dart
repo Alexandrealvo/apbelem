@@ -29,7 +29,7 @@ class LoginPage extends StatelessWidget {
                     child: Column(children: <Widget>[
                       Center(
                         child: Container(
-                          padding: const EdgeInsets.only(top: 90),
+                          padding: const EdgeInsets.only(top: 120),
                           child: Image.asset(
                             "images/logo.png",
                             fit: BoxFit.fill,

@@ -1,6 +1,10 @@
+import 'package:apbelem/modules/Home/app_bar_widget.dart';
+import 'package:apbelem/modules/Home/home_controller.dart';
 import 'package:apbelem/modules/Home/home_widget.dart';
 import 'package:apbelem/modules/Login/login_controller.dart';
 import 'package:apbelem/utils/delete_alert.dart';
+import 'package:apbelem/utils/edge_alert.dart';
+import 'package:edge_alert/edge_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -9,6 +13,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:io';
 import 'package:flutter/widgets.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
@@ -20,7 +25,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final LoginController loginController = Get.put(LoginController());
   //final ThemeController themeController = Get.put(ThemeController());
-  //final HomePageController homePageController = Get.put(HomePageController());
+  final HomePageController homePageController = Get.put(HomePageController());
 
   int selectedIndex = 0;
 
@@ -33,7 +38,8 @@ class _HomePageState extends State<HomePage> {
   final _picker = ImagePicker();
   File _selectedFile;
 
-  final uri = Uri.parse("https://condosocio.com.br/flutter/upload_imagem.php");
+  final uri = Uri.parse(
+      "https://admautopecasbelem.com.br/login/flutter/upload_imagem.php");
 
   Future<void> logoutUser() async {
     await GetStorage.init();
@@ -50,15 +56,12 @@ class _HomePageState extends State<HomePage> {
     Get.offAllNamed('/login');
   }
 
-  /*Future uploadImage() async {
+  Future uploadImage() async {
     var request = http.MultipartRequest('POST', uri);
     request.fields['idusu'] = loginController.idusu.value;
     var pic = await http.MultipartFile.fromPath("image", _selectedFile.path);
-    print(" meu arquivo => ${_selectedFile.path}");
     request.files.add(pic);
     var response = await request.send();
-    print(response.request);
-
     if (response.statusCode == 200) {
       Navigator.of(context).pop();
       edgeAlertWidget(context, 'Imagem do perfil alterada');
@@ -67,24 +70,26 @@ class _HomePageState extends State<HomePage> {
     } else {
       Navigator.of(context).pop();
       EdgeAlert.show(context,
-          title: 'Imagem não enviada',
+          title: 'Imagem Não Enviada',
           gravity: EdgeAlert.BOTTOM,
           backgroundColor: Colors.red,
           icon: Icons.highlight_off);
     }
     _selectedFile = null;
-  }*/
+  }
 
   Widget getImageWidget() {
     if (_selectedFile != null) {
       return GestureDetector(
         onTap: () {
           _configurandoModalBottomSheet(context);
-          //Navigator.pushNamed(context, '/Home');
+         Navigator.pushNamed(context, '/Home');
         },
         child: Container(
           child: Column(
+            
             children: [
+              
               Container(
                   margin: EdgeInsets.only(left: 40, bottom: 5),
                   child: Center(
@@ -96,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).accentColor
                   )),
             ],
           ),
@@ -149,8 +154,10 @@ class _HomePageState extends State<HomePage> {
               )
             : Container(
                 child: Column(
+                  
                   children: [
                     Container(
+                      
                       margin: EdgeInsets.only(left: 40, bottom: 5),
                       child: Center(
                         child: Icon(
@@ -170,11 +177,12 @@ class _HomePageState extends State<HomePage> {
                 ),
                 width: 70,
                 height: 70,
-                decoration: BoxDecoration(
+                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                    image: NetworkImage(
-                        'https://condosocio.com.br/acond/downloads/fotosperfil/${loginController.imgperfil.value}'),
+                            image: NetworkImage(
+                              'https://admautopecasbelem.com.br/login/areadm/downloads/fotosperfil/${loginController.imgperfil.value}',
+                    ),
                   ),
                 ),
               ),
@@ -182,7 +190,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  /*getImage(ImageSource source) async {
+  getImage(ImageSource source) async {
     this.setState(() {});
     PickedFile image = await _picker.getImage(source: source);
     if (image != null) {
@@ -209,7 +217,7 @@ class _HomePageState extends State<HomePage> {
         }
       });
     }
-  }*/
+  }
 
   void _configurandoModalBottomSheet(context) {
     showModalBottomSheet(
@@ -225,7 +233,7 @@ class _HomePageState extends State<HomePage> {
                         child: Text(
                   "Alterar Imagem",
                   style: GoogleFonts.montserrat(
-                      fontWeight: FontWeight.w600, fontSize: 18),
+                      fontSize: 16),
                 ))),
                 Divider(
                   height: 20,
@@ -284,28 +292,28 @@ class _HomePageState extends State<HomePage> {
         return false;
       },
       child: SafeArea(
+        
         child: Scaffold(
-          key: scaffoldKey,
-          appBar: AppBar(
-            title: Text(
-              'MENU',
-              style: GoogleFonts.montserrat(
-                fontSize: 16,
-                color: Theme.of(context).textSelectionTheme.selectionColor,
-              ),
-            ),
-            centerTitle: true,
+          
+        key: scaffoldKey,
+          appBar: AppBarWidget(
+            context: context,
+            onTap: () {
+              scaffoldKey.currentState.openDrawer();
+            },
+            image: loginController.imgperfil.value,
+            
           ),
           drawer: Drawer(
             child: Container(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).primaryColor,
               child: ListView(
                 children: <Widget>[
                   DrawerHeader(
                       padding: EdgeInsets.all(0),
                       child: Container(
                         padding: EdgeInsets.only(top: 20),
-                        color: Theme.of(context).primaryColor,
+                        color: Theme.of(context).accentColor,
                         child: Column(
                           children: <Widget>[
                             getImageWidget(),
@@ -317,8 +325,7 @@ class _HomePageState extends State<HomePage> {
                                 softWrap: false,
                                 style: GoogleFonts.montserrat(
                                     color: Theme.of(context)
-                                        .textSelectionTheme
-                                        .selectionColor,
+                                        .buttonColor,
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -326,11 +333,10 @@ class _HomePageState extends State<HomePage> {
                             Container(
                               padding: EdgeInsets.only(top: 2),
                               child: Text(
-                                '${loginController.email.value}',
+                                "${loginController.email.value.text}",
                                 style: GoogleFonts.montserrat(
                                   color: Theme.of(context)
-                                      .textSelectionTheme
-                                      .selectionColor,
+                                      .primaryColor,
                                   fontSize: 10,
                                 ),
                               ),
@@ -338,11 +344,10 @@ class _HomePageState extends State<HomePage> {
                             Container(
                               padding: EdgeInsets.only(top: 2),
                               child: Text(
-                                'teste',
+                                '${loginController.tipousu.value}',
                                 style: GoogleFonts.montserrat(
                                   color: Theme.of(context)
-                                      .textSelectionTheme
-                                      .selectionColor,
+                                      .primaryColor,
                                   fontSize: 10,
                                 ),
                               ),
@@ -350,6 +355,7 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       )),
+
                   Column(
                     children: <Widget>[
                       Container(
@@ -415,7 +421,7 @@ class _HomePageState extends State<HomePage> {
                           contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
                           dense: true,
                           title: Text(
-                            'Sobre',
+                            'Comunicados',
                             style: GoogleFonts.montserrat(
                               color: Theme.of(context)
                                   .textSelectionTheme
@@ -424,7 +430,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           leading: Icon(
-                            Icons.help,
+                            Icons.notification_add,
                             color: Theme.of(context)
                                 .textSelectionTheme
                                 .selectionColor,
@@ -439,94 +445,8 @@ class _HomePageState extends State<HomePage> {
                         height: 5,
                         color: Theme.of(context).primaryColor,
                       ),
-                      Container(
-                        child: ListTile(
-                          contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
-                          dense: true,
-                          title: Text(
-                            'Termos de Uso',
-                            style: GoogleFonts.montserrat(
-                              color: Theme.of(context)
-                                  .textSelectionTheme
-                                  .selectionColor,
-                              fontSize: 12,
-                            ),
-                          ),
-                          leading: Icon(
-                            FontAwesome.check_square_o,
-                            color: Theme.of(context)
-                                .textSelectionTheme
-                                .selectionColor,
-                            size: 22,
-                          ),
-                          onTap: () {},
-                        ),
-                      ),
-                      Divider(
-                        height: 5,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      Container(
-                        child: ListTile(
-                          contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
-                          dense: true,
-                          title: Text(
-                            'Política de Privacidade',
-                            style: GoogleFonts.montserrat(
-                              color: Theme.of(context)
-                                  .textSelectionTheme
-                                  .selectionColor,
-                              fontSize: 12,
-                            ),
-                          ),
-                          leading: Icon(
-                            FontAwesome.shield,
-                            color: Theme.of(context)
-                                .textSelectionTheme
-                                .selectionColor,
-                            size: 22,
-                          ),
-                          onTap: () {
-                            /* homePageController.launched =
-                                homePageController.launchInBrowser(
-                                    'https://condosocio.com.br/privacidade.html');*/
-                          },
-                        ),
-                      ),
-                      Divider(
-                        height: 5,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      Container(
-                        child: ListTile(
-                          contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
-                          dense: true,
-                          title: Text(
-                            'Avalie o app',
-                            style: GoogleFonts.montserrat(
-                              color: Theme.of(context)
-                                  .textSelectionTheme
-                                  .selectionColor,
-                              fontSize: 12,
-                            ),
-                          ),
-                          leading: Icon(
-                            Feather.star,
-                            color: Theme.of(context)
-                                .textSelectionTheme
-                                .selectionColor,
-                            size: 22,
-                          ),
-                          onTap: () {
-                            /*homePageController.launched = homePageController
-                                .launchInBrowser('http://onelink.to/r8p97m');*/
-                          },
-                        ),
-                      ),
-                      Divider(
-                        height: 5,
-                        color: Theme.of(context).primaryColor,
-                      ),
+                     
+                      
                       Container(
                         child: ListTile(
                           contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
@@ -590,11 +510,11 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Container(
                         child: Padding(
-                          padding: EdgeInsets.only(top: 10, bottom: 5),
+                          padding: EdgeInsets.only(top: 60, bottom: 5),
                           child: Container(
                             //color: Color(0xfff5f5f5),
                             child: Image.asset(
-                              'images/condosocio_logo.png',
+                              'images/logo.png',
                               width: 80,
                             ),
                           ),
@@ -604,7 +524,7 @@ class _HomePageState extends State<HomePage> {
                         child: Column(
                           children: [
                             Text(
-                              'Versão 7.5.0',
+                              'Versão 1.0.0',
                               style: GoogleFonts.montserrat(
                                 color: Theme.of(context)
                                     .textSelectionTheme
