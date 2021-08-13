@@ -11,11 +11,13 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'dart:async';
 import 'dart:io';
 import 'package:flutter/widgets.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -24,7 +26,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final LoginController loginController = Get.put(LoginController());
-  //final ThemeController themeController = Get.put(ThemeController());
   final HomePageController homePageController = Get.put(HomePageController());
 
   int selectedIndex = 0;
@@ -58,6 +59,7 @@ class _HomePageState extends State<HomePage> {
 
   Future uploadImage() async {
     var request = http.MultipartRequest('POST', uri);
+    print('${loginController.idusu.value}');
     request.fields['idusu'] = loginController.idusu.value;
     var pic = await http.MultipartFile.fromPath("image", _selectedFile.path);
     request.files.add(pic);
@@ -83,13 +85,11 @@ class _HomePageState extends State<HomePage> {
       return GestureDetector(
         onTap: () {
           _configurandoModalBottomSheet(context);
-         Navigator.pushNamed(context, '/Home');
+          Navigator.pushNamed(context, '/Home');
         },
         child: Container(
           child: Column(
-            
             children: [
-              
               Container(
                   margin: EdgeInsets.only(left: 40, bottom: 5),
                   child: Center(
@@ -100,9 +100,8 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Theme.of(context).accentColor
-                  )),
+                      shape: BoxShape.circle,
+                      color: Theme.of(context).accentColor)),
             ],
           ),
           width: 70,
@@ -154,10 +153,8 @@ class _HomePageState extends State<HomePage> {
               )
             : Container(
                 child: Column(
-                  
                   children: [
                     Container(
-                      
                       margin: EdgeInsets.only(left: 40, bottom: 5),
                       child: Center(
                         child: Icon(
@@ -177,11 +174,11 @@ class _HomePageState extends State<HomePage> {
                 ),
                 width: 70,
                 height: 70,
-                 decoration: BoxDecoration(
+                decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                            image: NetworkImage(
-                              'https://admautopecasbelem.com.br/login/areadm/downloads/fotosperfil/${loginController.imgperfil.value}',
+                    image: NetworkImage(
+                      'https://admautopecasbelem.com.br/login/areadm/downloads/fotosperfil/${loginController.imgperfil.value}',
                     ),
                   ),
                 ),
@@ -193,6 +190,8 @@ class _HomePageState extends State<HomePage> {
   getImage(ImageSource source) async {
     this.setState(() {});
     PickedFile image = await _picker.getImage(source: source);
+   // XFile image = await _picker.pickImage(source: source);
+  
     if (image != null) {
       File cropped = await ImageCropper.cropImage(
           sourcePath: image.path,
@@ -232,8 +231,7 @@ class _HomePageState extends State<HomePage> {
                     title: Center(
                         child: Text(
                   "Alterar Imagem",
-                  style: GoogleFonts.montserrat(
-                      fontSize: 16),
+                  style: GoogleFonts.montserrat(fontSize: 16),
                 ))),
                 Divider(
                   height: 20,
@@ -251,7 +249,7 @@ class _HomePageState extends State<HomePage> {
                       color:
                           Theme.of(context).textSelectionTheme.selectionColor,
                     ),
-                    onTap: () => {}),
+                    onTap: () => {getImage(ImageSource.camera)}),
                 Divider(
                   height: 20,
                   color: Theme.of(context).textSelectionTheme.selectionColor,
@@ -266,7 +264,7 @@ class _HomePageState extends State<HomePage> {
                         color: Theme.of(context)
                             .textSelectionTheme
                             .selectionColor),
-                    onTap: () => {}),
+                    onTap: () => {getImage(ImageSource.gallery)}),
                 Divider(
                   height: 20,
                   color: Theme.of(context).textSelectionTheme.selectionColor,
@@ -292,17 +290,14 @@ class _HomePageState extends State<HomePage> {
         return false;
       },
       child: SafeArea(
-        
         child: Scaffold(
-          
-        key: scaffoldKey,
+          key: scaffoldKey,
           appBar: AppBarWidget(
             context: context,
             onTap: () {
               scaffoldKey.currentState.openDrawer();
             },
             image: loginController.imgperfil.value,
-            
           ),
           drawer: Drawer(
             child: Container(
@@ -324,8 +319,7 @@ class _HomePageState extends State<HomePage> {
                                 overflow: TextOverflow.ellipsis,
                                 softWrap: false,
                                 style: GoogleFonts.montserrat(
-                                    color: Theme.of(context)
-                                        .buttonColor,
+                                    color: Theme.of(context).buttonColor,
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -335,8 +329,7 @@ class _HomePageState extends State<HomePage> {
                               child: Text(
                                 "${loginController.email.value.text}",
                                 style: GoogleFonts.montserrat(
-                                  color: Theme.of(context)
-                                      .primaryColor,
+                                  color: Theme.of(context).primaryColor,
                                   fontSize: 10,
                                 ),
                               ),
@@ -346,8 +339,7 @@ class _HomePageState extends State<HomePage> {
                               child: Text(
                                 '${loginController.tipousu.value}',
                                 style: GoogleFonts.montserrat(
-                                  color: Theme.of(context)
-                                      .primaryColor,
+                                  color: Theme.of(context).primaryColor,
                                   fontSize: 10,
                                 ),
                               ),
@@ -355,7 +347,6 @@ class _HomePageState extends State<HomePage> {
                           ],
                         ),
                       )),
-
                   Column(
                     children: <Widget>[
                       Container(
@@ -445,8 +436,6 @@ class _HomePageState extends State<HomePage> {
                         height: 5,
                         color: Theme.of(context).primaryColor,
                       ),
-                     
-                      
                       Container(
                         child: ListTile(
                           contentPadding: EdgeInsets.fromLTRB(15, 0, 10, 0),
@@ -468,10 +457,10 @@ class _HomePageState extends State<HomePage> {
                             size: 22,
                           ),
                           onTap: () {
-                            /*homePageController.launched =
+                            homePageController.launched =
                                 homePageController.launchInBrowser(
                               'https://api.whatsapp.com/send?phone=5591981220670',
-                            );*/
+                            );
                           },
                         ),
                       ),

@@ -220,7 +220,12 @@ class LoginPage extends StatelessWidget {
                                                 value['imgperfil'];
                                             loginController.tipousu.value =
                                                 value['tipousu'];
-
+                                            loginController.birthdate.value =
+                                                value['birthdate'];
+                                            loginController.genero.value =
+                                                value['genero'];
+                                            loginController.celular.value =
+                                                value['celular'];
                                             Get.offNamed('/home');
                                           }
                                         },
