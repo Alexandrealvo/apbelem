@@ -10,9 +10,15 @@ class LoginController extends GetxController {
   var nome = ''.obs;
   var imgperfil = ''.obs;
   var tipousu = ''.obs;
+  var phone = ''.obs;
+  var birthdate = ''.obs;
+  var genero = ''.obs;
+  var celular = ''.obs;
 
   var isLoading = false.obs;
 
+  Future<void> launched;
+  
   login() async {
     isLoading(true);
 
@@ -25,11 +31,18 @@ class LoginController extends GetxController {
     isLoading(false);
 
     var dadosUsuario = json.decode(response.body);
+
     print(dadosUsuario);
+
     if (dadosUsuario['valida'] == 1) {
       return dadosUsuario;
     } else {
       return null;
     }
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
   }
 }
