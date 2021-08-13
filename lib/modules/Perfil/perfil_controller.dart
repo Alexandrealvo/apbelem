@@ -11,6 +11,7 @@ class PerfilController extends GetxController {
   var isLoading = false.obs;
 
   var name = TextEditingController().obs;
+  var secondName = TextEditingController().obs;
   var gender = TextEditingController().obs;
   var birthdate = TextEditingController().obs;
   var newDate = ''.obs;
@@ -45,6 +46,7 @@ class PerfilController extends GetxController {
 
   editPerfil() async {
     if (name.value.text == '' ||
+        secondName.value.text == '' ||
         itemSelecionado.value == 'Selecione o gênero') {
       return 'vazio';
     } else {
@@ -55,7 +57,9 @@ class PerfilController extends GetxController {
       loginController.nome.value = name.value.text;
       loginController.genero.value = itemSelecionado.value;
 
-      phone.value.text = cellMaskFormatter.getUnmaskedText();
+      /*phone.value.text = cellMaskFormatter.getUnmaskedText();
+                var date = birthdate.value.text.split('/');*/
+
       var date = birthdate.value.text.split('/');
       newDate.value = '${date[2]}-${date[1]}-${date[0]}';
 
@@ -70,9 +74,11 @@ class PerfilController extends GetxController {
   }
 
   init() {
+
+    // AQUI OS DADOS NAO CONSEQUEM CHEGAR. PROBLEMAS NO GET
+    
     print("nome: ${loginController.nome.value}");
     name.value.text = loginController.nome.value;
-
     // phone.value.text = loginController.phone.value;
     //var date = loginController.birthdate.value.replaceAll('-', '/').split('/');
     // birthdate.value.text = '${date[2]}/${date[1]}/${date[0]}';

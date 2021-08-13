@@ -224,8 +224,8 @@ class LoginPage extends StatelessWidget {
                                                 value['birthdate'];
                                             loginController.genero.value =
                                                 value['genero'];
-                                            loginController.celular.value =
-                                                value['celular'];
+                                            loginController.phone.value =
+                                                value['phone'];
                                             Get.offNamed('/home');
                                           }
                                         },

@@ -85,7 +85,7 @@ class _HomePageState extends State<HomePage> {
       return GestureDetector(
         onTap: () {
           _configurandoModalBottomSheet(context);
-          Navigator.pushNamed(context, '/Home');
+          //Navigator.pushNamed(context, '/Home');
         },
         child: Container(
           child: Column(

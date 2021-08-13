@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class LoginController extends GetxController {
   var email = TextEditingController().obs;
@@ -13,12 +15,18 @@ class LoginController extends GetxController {
   var phone = ''.obs;
   var birthdate = ''.obs;
   var genero = ''.obs;
-  var celular = ''.obs;
 
+ RefreshController refreshController =
+      RefreshController(initialRefresh: false);
   var isLoading = false.obs;
 
-  Future<void> launched;
+
+  void onLoading() async {
+    refreshController.loadComplete();
+  }
   
+  Future<void> launched;
+
   login() async {
     isLoading(true);
 

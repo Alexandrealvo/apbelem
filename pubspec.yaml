@@ -36,6 +36,9 @@ dependencies:
   http: ^0.13.0
   edge_alert: ^0.0.1
   url_launcher: ^6.0.2
+  pull_to_refresh: ^2.0.0
+  flutter_localizations:
+    sdk: flutter
   mask_text_input_formatter: ^1.2.1
 
 dev_dependencies:
