@@ -1,5 +1,6 @@
 import 'package:apbelem/modules/Home/home_page.dart';
 import 'package:apbelem/modules/Perfil/perfil.dart';
+import 'package:apbelem/modules/Senha/senha.dart';
 import 'package:apbelem/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,7 +20,11 @@ void main() {
         page: () => LoginPage(),
       ),
       GetPage(name: '/home', page: () => HomePage(),),
-       GetPage(
+      GetPage(
+        name: '/senha',
+        page: () => Senha(),
+      ),
+      GetPage(
         name: '/perfil',
         page: () => Perfil(),
       ),
