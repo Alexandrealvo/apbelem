@@ -1,3 +1,4 @@
+import 'package:apbelem/modules/Chamadas/chamadas.dart';
 import 'package:apbelem/modules/Home/home_page.dart';
 import 'package:apbelem/modules/Perfil/perfil.dart';
 import 'package:apbelem/modules/Senha/senha.dart';
@@ -36,6 +37,10 @@ void main() {
       GetPage(
         name: '/perfil',
         page: () => Perfil(),
+      ),
+      GetPage(
+        name: '/chamadas',
+        page: () => Chamadas(),
       ),
     ],
   ));

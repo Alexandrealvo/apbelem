@@ -7,8 +7,13 @@ class ApiSenha {
   static Future senha() async {
     LoginController loginController = Get.put(LoginController());
     SenhaController senhaController = Get.put(SenhaController());
+
+    print(loginController.idusu.value);
+    print(senhaController.senhanova.value.text);
+    
     return await http.post(
-      Uri.https('condosocio.com.br', '/flutter/senha_alterar.php'),
+      Uri.https(
+          "www.admautopecasbelem.com.br", "/login/flutter/senha_alterar.php"),
       body: {
         'idusu': loginController.idusu.value,
         'senha': senhaController.senhanova.value.text,

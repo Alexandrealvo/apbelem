@@ -9,7 +9,8 @@ import 'dart:ui';
 import 'dart:core';
 
 class LoginPage extends StatelessWidget {
-  final LoginController loginController = Get.put(LoginController());
+  final LoginController loginController =
+      Get.put(LoginController(), permanent: true);
   final _formKey = GlobalKey<FormState>();
 
   @override

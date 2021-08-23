@@ -1,7 +1,7 @@
 import 'package:apbelem/modules/Senha/senha_controller.dart';
 import 'package:apbelem/utils/alert_button_pressed.dart';
 import 'package:apbelem/utils/circular_progress_indicator.dart';
-import 'package:apbelem/utils/confirmed_button_pressed.dart';
+import 'package:apbelem/utils/edge_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -197,10 +197,9 @@ class _SenhaState extends State<Senha> {
                                         print('valor: $value');
 
                                         if (value == 1) {
-                                          confirmedButtonPressed(
+                                           edgeAlertWidget(
                                             context,
-                                            "Senha alterada com sucesso!",
-                                            null,
+                                      'Senha Alterada com Sucesso!',
                                           );
                                         } else {
                                           onAlertButtonPressed(

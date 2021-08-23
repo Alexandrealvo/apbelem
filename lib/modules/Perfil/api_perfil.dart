@@ -8,9 +8,10 @@ class ApiPerfil {
     LoginController loginController = Get.put(LoginController());
     PerfilController perfilController = Get.put(PerfilController());
 
+
     return await http.post(
-        Uri.https(
-            "www.admautopecasbelem.com.br", "/flutter/perfil_alterar.php"),
+        Uri.https("www.admautopecasbelem.com.br",
+            "/login/flutter/perfil_alterar.php"),
         body: {
           'idusu': loginController.idusu.value,
           'nome': perfilController.name.value.text,

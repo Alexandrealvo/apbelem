@@ -12,6 +12,7 @@ class SenhaController extends GetxController {
   var isLoading = false.obs;
 
   senha(context) async {
+    
     isLoading(true);
     FocusScopeNode currentFocus = FocusScope.of(context);
     if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {

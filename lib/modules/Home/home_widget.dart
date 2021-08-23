@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomeBottomTab extends StatefulWidget {
@@ -28,7 +29,7 @@ class _HomeBottomTabState extends State<HomeBottomTab> {
                     children: <Widget>[
                       GestureDetector(
                         onTap: () {
-                        //Get.toNamed('/visualizarAcessos');
+                        Get.toNamed('/chamadas');
                         },
                         child: Container(
                             decoration: BoxDecoration(
