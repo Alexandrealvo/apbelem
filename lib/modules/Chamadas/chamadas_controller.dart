@@ -4,7 +4,7 @@ import 'package:apbelem/modules/Chamadas/mapa_chamadas.dart';
 import 'package:get/get.dart';
 
 class ChamadasController extends GetxController {
-  List<Dadoschamadas> chamadas;
+  var chamadas = <Dadoschamadas>[].obs;
   var idchamada = ''.obs;
   var nomecliente = ''.obs;
   var datacliente = ''.obs;
@@ -18,9 +18,11 @@ class ChamadasController extends GetxController {
   var isLoading = true.obs;
 
   void getChamadas() {
+    isLoading(true);
     ApiChamadas.getChamadas().then((response) {
       Iterable lista = json.decode(response.body);
-      chamadas = lista.map((model) => Dadoschamadas.fromJson(model)).toList();
+      chamadas.assignAll(
+          lista.map((model) => Dadoschamadas.fromJson(model)).toList());
       isLoading(false);
     });
   }

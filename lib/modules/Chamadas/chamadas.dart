@@ -387,7 +387,7 @@ class _ChamadasState extends State<Chamadas> {
                                         'Cliente Recusado com Sucesso!',
                                       );
 // Preciso atualizar a pagina aqui como fazer///
-                                      visualizarChamadasController.onRefresh();
+                                      chamadasController.getChamadas();
                                     } else {
                                       onAlertButtonPressed(
                                           context,
