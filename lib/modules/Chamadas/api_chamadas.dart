@@ -15,6 +15,8 @@ class ApiChamadas extends GetxController {
 
   static Future getChamadas() async {
     LoginController loginController = Get.put(LoginController());
+    print(loginController.idusu.value);
+
     return await http.get(Uri.https("www.admautopecasbelem.com.br",
         "/login/flutter/chamadas.php", {"idusu": loginController.idusu.value}));
   }
@@ -32,6 +34,8 @@ class ApiChamadas extends GetxController {
     var dados = json.decode(response.body);
     return dados;
   }
+
+  
 
   @override
   void onInit() {

@@ -13,6 +13,7 @@ import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Chamadas extends StatefulWidget {
@@ -99,7 +100,6 @@ class _ChamadasState extends State<Chamadas> {
       String responsavel,
       String status,
       String idchamada) {
-    print(idchamada);
     showModalBottomSheet(
         context: context,
         builder: (BuildContext bc) {
@@ -320,10 +320,9 @@ class _ChamadasState extends State<Chamadas> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               GestureDetector(
-                                onTap: () => cel == ""
-                                    ? edgeAlertWidgetDanger(
-                                        context, 'Endereço Vazio!')
-                                    : print('mostrar mapa'),
+                                onTap: () {
+                                  Get.toNamed('/mapacliente');
+                                },
                                 child: Card(
                                   color: Theme.of(context).buttonColor,
                                   child: Column(
@@ -375,77 +374,326 @@ class _ChamadasState extends State<Chamadas> {
                           children: [
                             Container(
                               width: MediaQuery.of(context).size.width,
-                              height: 50,
-                              child: RaisedButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  ApiChamadas.getAceitar(idchamada, "Recusado")
-                                      .then((value) {
-                                    if (value == 1) {
-                                      edgeAlertWidget(
-                                        context,
-                                        'Cliente Recusado com Sucesso!',
-                                      );
-// Preciso atualizar a pagina aqui como fazer///
-                                      chamadasController.getChamadas();
-                                    } else {
-                                      onAlertButtonPressed(
-                                          context,
-                                          'Algo deu errado\n Tente novamente',
-                                          null);
-                                    }
-                                  });
-                                },
-                                shape: new RoundedRectangleBorder(
-                                    borderRadius:
-                                        new BorderRadius.circular(10)),
-                                child: Text(
-                                  "Recusar",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 16),
+                              child: ButtonTheme(
+                                height: 50.0,
+                                child: ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty
+                                        .resolveWith<Color>(
+                                      (Set<MaterialState> states) {
+                                        return Theme.of(context).errorColor;
+                                      },
+                                    ),
+                                    shape: MaterialStateProperty.resolveWith<
+                                        OutlinedBorder>(
+                                      (Set<MaterialState> states) {
+                                        return RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Alert(
+                                      image: Icon(
+                                        Icons.check,
+                                        color: Colors.green,
+                                        size: 60,
+                                      ),
+                                      style: AlertStyle(
+                                        backgroundColor: Theme.of(context)
+                                            .textSelectionTheme
+                                            .selectionColor,
+                                        animationType: AnimationType.fromTop,
+                                        isCloseButton: false,
+                                        isOverlayTapDismiss: false,
+                                        animationDuration:
+                                            Duration(milliseconds: 300),
+                                        titleStyle: GoogleFonts.poppins(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      context: context,
+                                      title: "Deseja Recusar o Cliente?",
+                                      buttons: [
+                                        DialogButton(
+                                          child: Text(
+                                            "OK",
+                                            style: GoogleFonts.montserrat(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                            ApiChamadas.getAceitar(
+                                                    idchamada, "Recusado")
+                                                .then((value) {
+                                              if (value == 1) {
+                                                Navigator.of(context).pop();
+                                                chamadasController
+                                                    .getChamadas();
+
+                                                edgeAlertWidget(
+                                                  context,
+                                                  'Cliente Recusado com Sucesso!',
+                                                );
+                                              } else {
+                                                onAlertButtonPressed(
+                                                    context,
+                                                    'Algo deu errado\n Tente novamente',
+                                                    null);
+                                              }
+                                            });
+                                          },
+                                          width: 80,
+                                          color: Colors.green,
+                                        ),
+                                        DialogButton(
+                                          child: Text(
+                                            "Cancelar",
+                                            style: GoogleFonts.montserrat(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          width: 80,
+                                          color: Theme.of(context).errorColor,
+                                        )
+                                      ],
+                                    ).show();
+                                  },
+                                  child: Text(
+                                    'Recusar',
+                                    style: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context)
+                                          .textSelectionTheme
+                                          .selectionColor,
+                                    ),
+                                  ),
                                 ),
-                                color: Colors.red,
                               ),
                             ),
                             Divider(
-                              height: 20,
+                              height: 10,
                             ),
                             Container(
                               width: MediaQuery.of(context).size.width,
-                              height: 50,
-                              child: RaisedButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  ApiChamadas.getAceitar(idchamada, "Aceito")
-                                      .then((value) {
-                                    if (value == 1) {
-                                      edgeAlertWidget(
-                                        context,
-                                        'Cliente Aceito com Sucesso!',
-                                      );
-                                    } else {
-                                      onAlertButtonPressed(
-                                          context,
-                                          'Algo deu errado\n Tente novamente',
-                                          null);
-                                    }
-                                  });
-                                },
-                                shape: new RoundedRectangleBorder(
-                                    borderRadius:
-                                        new BorderRadius.circular(10)),
-                                child: Text(
-                                  "Aceitar",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 16),
+                              child: ButtonTheme(
+                                height: 50.0,
+                                child: ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty
+                                        .resolveWith<Color>(
+                                      (Set<MaterialState> states) {
+                                        return Colors.green;
+                                      },
+                                    ),
+                                    shape: MaterialStateProperty.resolveWith<
+                                        OutlinedBorder>(
+                                      (Set<MaterialState> states) {
+                                        return RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Alert(
+                                      image: Icon(
+                                        Icons.check,
+                                        color: Colors.green,
+                                        size: 60,
+                                      ),
+                                      style: AlertStyle(
+                                        backgroundColor: Theme.of(context)
+                                            .textSelectionTheme
+                                            .selectionColor,
+                                        animationType: AnimationType.fromTop,
+                                        isCloseButton: false,
+                                        isOverlayTapDismiss: false,
+                                        animationDuration:
+                                            Duration(milliseconds: 300),
+                                        titleStyle: GoogleFonts.poppins(
+                                          color: Colors.black,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      context: context,
+                                      title: "Deseja Aceitar o Cliente?",
+                                      buttons: [
+                                        DialogButton(
+                                          child: Text(
+                                            "OK",
+                                            style: GoogleFonts.montserrat(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                            ApiChamadas.getAceitar(
+                                                    idchamada, "Aceito")
+                                                .then((value) {
+                                              if (value == 1) {
+                                                Navigator.of(context).pop();
+                                                chamadasController
+                                                    .getChamadas();
+                                                edgeAlertWidget(
+                                                  context,
+                                                  'Cliente Aceito com Sucesso!',
+                                                );
+                                              } else {
+                                                onAlertButtonPressed(
+                                                    context,
+                                                    'Algo deu errado\n Tente novamente',
+                                                    null);
+                                              }
+                                            });
+                                          },
+                                          width: 80,
+                                          color: Colors.green,
+                                        ),
+                                        DialogButton(
+                                          child: Text(
+                                            "Cancelar",
+                                            style: GoogleFonts.montserrat(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          width: 80,
+                                          color: Theme.of(context).errorColor,
+                                        )
+                                      ],
+                                    ).show();
+                                  },
+                                  child: Text(
+                                    'Aceitar',
+                                    style: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context)
+                                          .textSelectionTheme
+                                          .selectionColor,
+                                    ),
+                                  ),
                                 ),
-                                color: Colors.green,
                               ),
                             ),
                           ],
                         ),
                       )
-                    : Container(),
+                    : Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              child: ButtonTheme(
+                                height: 50.0,
+                                child: ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty
+                                        .resolveWith<Color>(
+                                      (Set<MaterialState> states) {
+                                        return Theme.of(context).errorColor;
+                                      },
+                                    ),
+                                    shape: MaterialStateProperty.resolveWith<
+                                        OutlinedBorder>(
+                                      (Set<MaterialState> states) {
+                                        return RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    Get.toNamed('/mudarstatus');
+                                  },
+                                  child: Text(
+                                    'Info Status',
+                                    style: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context)
+                                          .textSelectionTheme
+                                          .selectionColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Divider(
+                              height: 10,
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              child: ButtonTheme(
+                                height: 50.0,
+                                child: ElevatedButton(
+                                  style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty
+                                        .resolveWith<Color>(
+                                      (Set<MaterialState> states) {
+                                        return Theme.of(context).accentColor;
+                                      },
+                                    ),
+                                    shape: MaterialStateProperty.resolveWith<
+                                        OutlinedBorder>(
+                                      (Set<MaterialState> states) {
+                                        return RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    /* ApiChamadas.getAceitar(idchamada, "Aceito")
+                                        .then((value) {
+                                      if (value == 1) {
+                                        edgeAlertWidget(
+                                          context,
+                                          'Cliente Aceito com Sucesso!',
+                                        );
+
+                                        chamadasController.getChamadas();
+                                      } else {
+                                        onAlertButtonPressed(
+                                            context,
+                                            'Algo deu errado\n Tente novamente',
+                                            null);
+                                      }
+                                    });*/
+                                  },
+                                  child: Text(
+                                    'Agendar Visitas',
+                                    style: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.bold,
+                                      color: Theme.of(context)
+                                          .textSelectionTheme
+                                          .selectionColor,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
               ],
             ),
           );
@@ -511,17 +759,24 @@ class _ChamadasState extends State<Chamadas> {
 
                                 return GestureDetector(
                                   onTap: () {
+                                    chamadasController.statuscliente.value =
+                                        search.statuscliente;
+                                    chamadasController.idchamada.value =
+                                        search.idchamada;
+                                    chamadasController.observacao.value =
+                                        search.observacao;
+
                                     _configurandoModalBottomSheet(
                                       context,
-                                      chamadasController.nomecliente.value,
-                                      chamadasController.endereco.value,
-                                      chamadasController.tel.value,
-                                      chamadasController.cel.value,
-                                      chamadasController.whatsapp.value,
-                                      chamadasController.whatresp.value,
-                                      chamadasController.responsavel.value,
-                                      chamadasController.status.value,
-                                      chamadasController.idchamada.value,
+                                      search.nomecliente,
+                                      search.endereco,
+                                      search.tel,
+                                      search.cel,
+                                      search.whatsapp,
+                                      search.whatresp,
+                                      search.responsavel,
+                                      search.status,
+                                      search.idchamada,
                                     );
                                   },
                                   child: Card(
@@ -606,6 +861,13 @@ class _ChamadasState extends State<Chamadas> {
                       var chamadas = chamadasController.chamadas[index];
                       return GestureDetector(
                         onTap: () {
+                          chamadasController.statuscliente.value =
+                              chamadas.statuscliente;
+                          chamadasController.idchamada.value =
+                              chamadas.idchamada;
+                          chamadasController.observacao.value =
+                              chamadas.observacao;
+
                           _configurandoModalBottomSheet(
                             context,
                             chamadas.nomecliente,
@@ -618,7 +880,6 @@ class _ChamadasState extends State<Chamadas> {
                             chamadas.status,
                             chamadas.idchamada,
                           );
-                          print(chamadas.responsavel);
                         },
                         child: Card(
                           shape: RoundedRectangleBorder(

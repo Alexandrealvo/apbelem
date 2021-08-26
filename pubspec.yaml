@@ -41,6 +41,7 @@ dependencies:
     sdk: flutter
   mask_text_input_formatter: ^1.2.1
   flutter_open_whatsapp: ^0.1.2
+  google_maps_flutter: ^2.0.6
 
 dev_dependencies:
   flutter_test:

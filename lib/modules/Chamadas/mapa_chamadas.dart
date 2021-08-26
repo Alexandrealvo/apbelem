@@ -9,6 +9,8 @@ class Dadoschamadas {
   String responsavel;
   String whatresp;
   String status;
+  String statuscliente;
+  String observacao;
 
   Dadoschamadas(
       String idchamada,
@@ -20,7 +22,9 @@ class Dadoschamadas {
       String whatsapp,
       String responsavel,
       String whatresp,
-      String status) {
+      String status,
+      String statuscliente,
+      String observacao) {
     this.idchamada = idchamada;
     this.nomecliente = nomecliente;
     this.datacreate = datacreate;
@@ -31,6 +35,8 @@ class Dadoschamadas {
     this.responsavel = responsavel;
     this.whatresp = whatresp;
     this.status = status;
+    this.statuscliente = statuscliente;
+    this.observacao = observacao;
   }
 
   Dadoschamadas.fromJson(Map json) {
@@ -44,5 +50,7 @@ class Dadoschamadas {
     responsavel = json['responsavel'];
     whatresp = json['whatresp'];
     status = json['status'];
+    statuscliente = json['statuscliente'];
+    observacao = json['observacao'];
   }
 }

@@ -10,3 +10,13 @@ edgeAlertWidgetDanger(context, String title) {
     icon: Icons.close,
   );
 }
+
+edgeAlertWidgetDangerTop(context, String title) {
+  return EdgeAlert.show(
+    context,
+    title: title,
+    gravity: EdgeAlert.TOP,
+    backgroundColor: Colors.red,
+    icon: Icons.close,
+  );
+}

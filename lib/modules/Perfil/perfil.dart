@@ -316,6 +316,7 @@ class _PerfilState extends State<Perfil> {
                             1,
                             true,
                             perfilController.name.value,
+                            false,
                           ),
                           SizedBox(
                             height: 15,
@@ -470,7 +471,7 @@ class _PerfilState extends State<Perfil> {
                             ),
                           ),
                           SizedBox(
-                            height: 10,
+                            height: 30,
                           ),
                           ButtonTheme(
                             height: 50.0,

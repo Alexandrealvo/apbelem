@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 Widget customTextField(BuildContext context, String labelText, String hintText,
-    bool linesBool, int lines, bool enabled, TextEditingController controller) {
+    bool linesBool,
+    int lines,
+    bool enabled,
+    TextEditingController controller,
+    bool autofocus) {
   return TextField(
+    autofocus: autofocus,
     onTap: () {
       FocusScopeNode currentFocus = FocusScope.of(context);
       if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {

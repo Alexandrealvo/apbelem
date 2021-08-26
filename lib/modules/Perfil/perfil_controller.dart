@@ -70,7 +70,7 @@ class PerfilController extends GetxController {
   }
 
   init() {
-    print("nome: ${loginController.nome.value}");
+
     name.value.text = loginController.nome.value;
     phone.value.text = loginController.phone.value;
     var date = loginController.birthdate.value.replaceAll('-', '/').split('/');

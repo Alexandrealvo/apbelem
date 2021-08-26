@@ -1,5 +1,7 @@
 import 'package:apbelem/modules/Login/login_controller.dart';
 import 'package:apbelem/utils/alert_button_pressed.dart';
+import 'package:apbelem/utils/edge_alert.dart';
+import 'package:apbelem/utils/edge_alert_danger.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -195,10 +197,9 @@ class LoginPage extends StatelessWidget {
                                             '' ||
                                         loginController.password.value.text ==
                                             '') {
-                                      onAlertButtonPressed(
+                                       edgeAlertWidgetDangerTop(
                                         context,
-                                        'Campo e-mail ou senha vazio!',
-                                        '',
+                                              'Campo E-mail ou Senha Vazio!',
                                       );
                                     }
                                     if (_formKey.currentState.validate()) {
@@ -207,10 +208,10 @@ class LoginPage extends StatelessWidget {
                                           if (value == null) {
                                             loginController
                                                 .password.value.text = '';
-                                            onAlertButtonPressed(
+                                            edgeAlertWidgetDangerTop(
                                               context,
-                                              'Email ou senha inválidos! \n Tente novamente',
-                                              '',
+                                              'Email ou Senha Inválidos!',
+                                              
                                             );
                                           } else {
                                             loginController.idusu.value =

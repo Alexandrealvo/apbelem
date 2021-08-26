@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
-onAlertButtonPressed(context, String text, String page) {
+onAlertButtonCheck(context, String text, String page) {
   Alert(
     image: Image.asset("images/logo.png"),
     style: AlertStyle(
@@ -35,7 +35,7 @@ onAlertButtonPressed(context, String text, String page) {
               : Get.back();
         },
         width: 80,
-        color: Theme.of(context).errorColor,
+        color: Colors.green,
       )
     ],
   ).show();

@@ -1,5 +1,7 @@
 import 'package:apbelem/modules/Chamadas/chamadas.dart';
+import 'package:apbelem/modules/Chamadas/status_cliente.dart';
 import 'package:apbelem/modules/Home/home_page.dart';
+import 'package:apbelem/modules/Mapa/mapa_cliente.dart';
 import 'package:apbelem/modules/Perfil/perfil.dart';
 import 'package:apbelem/modules/Senha/senha.dart';
 import 'package:apbelem/theme/theme.dart';
@@ -41,6 +43,15 @@ void main() {
       GetPage(
         name: '/chamadas',
         page: () => Chamadas(),
+      ),
+      GetPage(
+        name: '/mudarstatus',
+        page: () => MudarStatus(),
+      ),
+      GetPage(
+        name: '/mapacliente',
+        page: () => MapaCliente(),
+       
       ),
     ],
   ));

@@ -15,6 +15,8 @@ class ChamadasController extends GetxController {
   var responsavel = ''.obs;
   var whatresp = ''.obs;
   var status = ''.obs;
+  var statuscliente = ''.obs;
+  var observacao = ''.obs;
   var isLoading = true.obs;
 
   void getChamadas() {
@@ -25,5 +27,10 @@ class ChamadasController extends GetxController {
           lista.map((model) => Dadoschamadas.fromJson(model)).toList());
       isLoading(false);
     });
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
   }
 }
