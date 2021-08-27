@@ -1,8 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.apbelem">
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+  <!--<uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/> -->
+   <uses-permission android:name="android.permission.INTERNET"/>
+   <uses-permission android:name="android.permission.USE_FINGERPRINT"/>
    <application
         android:label="apbelem"
         android:icon="@mipmap/ic_launcher">
+         <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyDb3Xu7c3rJaWhcazQvA6urI2DEczkTr1I"/>
         
         <activity
             android:name=".MainActivity"
@@ -19,9 +26,8 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
-              <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyDEhLB_72SmKKpnD4wT7B2ei0aySOJfRdA"/>
-               
+             
+                
             <!-- Displays an Android View that continues showing the launch screen
                  Drawable until Flutter paints its first frame, then this splash
                  screen fades out. A splash screen is useful to avoid any visual
