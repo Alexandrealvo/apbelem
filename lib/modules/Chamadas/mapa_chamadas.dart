@@ -11,20 +11,25 @@ class Dadoschamadas {
   String status;
   String statuscliente;
   String observacao;
+  String lat;
+  String lng;
 
   Dadoschamadas(
-      String idchamada,
-      String nomecliente,
-      String datacreate,
-      String endereco,
-      String tel,
-      String cel,
-      String whatsapp,
-      String responsavel,
-      String whatresp,
-      String status,
-      String statuscliente,
-      String observacao) {
+    String idchamada,
+    String nomecliente,
+    String datacreate,
+    String endereco,
+    String tel,
+    String cel,
+    String whatsapp,
+    String responsavel,
+    String whatresp,
+    String status,
+    String statuscliente,
+    String observacao,
+    String lat,
+    String lng,
+  ) {
     this.idchamada = idchamada;
     this.nomecliente = nomecliente;
     this.datacreate = datacreate;
@@ -37,6 +42,8 @@ class Dadoschamadas {
     this.status = status;
     this.statuscliente = statuscliente;
     this.observacao = observacao;
+    this.lat = lat;
+    this.lng = lng;
   }
 
   Dadoschamadas.fromJson(Map json) {
@@ -52,5 +59,7 @@ class Dadoschamadas {
     status = json['status'];
     statuscliente = json['statuscliente'];
     observacao = json['observacao'];
+    lat = json['lat'];
+    lng = json['lng'];
   }
 }

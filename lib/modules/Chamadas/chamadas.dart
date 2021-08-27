@@ -765,7 +765,12 @@ class _ChamadasState extends State<Chamadas> {
                                         search.idchamada;
                                     chamadasController.observacao.value =
                                         search.observacao;
-
+                                    chamadasController.lat.value = search.lat;
+                                    chamadasController.lng.value = search.lng;
+                                    chamadasController.nomecliente.value =
+                                        search.nomecliente;
+                                    chamadasController.endereco.value =
+                                        search.endereco;
                                     _configurandoModalBottomSheet(
                                       context,
                                       search.nomecliente,
@@ -867,6 +872,11 @@ class _ChamadasState extends State<Chamadas> {
                               chamadas.idchamada;
                           chamadasController.observacao.value =
                               chamadas.observacao;
+                          chamadasController.lat.value = chamadas.lat;
+                          chamadasController.lng.value = chamadas.lng;
+                          chamadasController.nomecliente.value =
+                              chamadas.nomecliente;
+                          chamadasController.endereco.value = chamadas.endereco;
 
                           _configurandoModalBottomSheet(
                             context,

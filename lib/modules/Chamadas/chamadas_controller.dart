@@ -17,6 +17,8 @@ class ChamadasController extends GetxController {
   var status = ''.obs;
   var statuscliente = ''.obs;
   var observacao = ''.obs;
+  var lat = ''.obs;
+  var lng = ''.obs;
   var isLoading = true.obs;
 
   void getChamadas() {

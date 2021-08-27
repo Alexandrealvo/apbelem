@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'package:apbelem/modules/Chamadas/chamadas_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -10,6 +12,7 @@ class MapaCliente extends StatefulWidget {
 }
 
 class MapaClienteState extends State<MapaCliente> {
+  ChamadasController chamadasController = Get.put(ChamadasController());
   Completer<GoogleMapController> _controller = Completer();
   //List<Dados_Clientes> clientes = <Dados_Clientes>[];
   bool isLoading = false;
@@ -25,12 +28,12 @@ class MapaClienteState extends State<MapaCliente> {
 
   _getClientes() {
     _markers.add(Marker(
-        markerId: MarkerId("Titulo"),
-        position:
-            LatLng(double.parse('-1.4067534'), double.parse('-48.4368586')),
+        markerId: MarkerId(chamadasController.nomecliente.value),
+        position: LatLng(double.parse(chamadasController.lat.value),
+            double.parse(chamadasController.lng.value)),
         infoWindow: InfoWindow(
-          title: 'Nome Cliente',
-          snippet: 'Tv Piraja',
+          title: chamadasController.nomecliente.value,
+          snippet: "${chamadasController.endereco.value}",
         ),
         icon: BitmapDescriptor.defaultMarkerWithHue(
           BitmapDescriptor.hueRed,
@@ -108,31 +111,34 @@ class MapaClienteState extends State<MapaCliente> {
   }
 
   Widget _buildContainer() {
-    return Align(
-      alignment: Alignment.bottomLeft,
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 20),
-        height: 150,
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: _boxes(
-                double.parse('-1.4067534'),
-                double.parse('-48.4368586'),
-                "NOME TESTE",
-                "TV PIRAJA",
-                "PEDREIRAS",
-              ),
+    return Positioned(
+      bottom: 10,
+      right: 5,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: _boxes(
+                    double.parse(chamadasController.lat.value),
+                    double.parse(chamadasController.lng.value),
+                    chamadasController.nomecliente.value,
+                    chamadasController.endereco.value,
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
   Widget _boxes(
-      double lat, double long, String nome, String end, String bairro) {
+      double lat, double long, String nome, String end) {
     return GestureDetector(
       onTap: () {
         _gotoLocation(lat, long);
@@ -140,19 +146,22 @@ class MapaClienteState extends State<MapaCliente> {
       child: Container(
         child: new FittedBox(
           child: Material(
-              color: Colors.red[900],
-              elevation: 14.0,
-              borderRadius: BorderRadius.circular(24.0),
+              color: Theme.of(context).buttonColor,
+              elevation: 10,
+              borderRadius: BorderRadius.circular(15),
               shadowColor: Color(0x802196F3),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: myDetailsContainer1(nome, end, bairro),
+                    padding: const EdgeInsets.all(10),
+                    child: Icon(
+                      Icons.adjust,
+                      size: 30,
+                      color: Theme.of(context).primaryColor,
                     ),
                   ),
+                  
                 ],
               )),
         ),
@@ -160,42 +169,39 @@ class MapaClienteState extends State<MapaCliente> {
     );
   }
 
-  Widget myDetailsContainer1(String nome, end, bairro) {
+  /*Widget myDetailsContainer1(String nome, end) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-          child: Container(
-              child: Text(
-            nome,
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 14.0,
-                fontWeight: FontWeight.bold),
-          )),
+        Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+              child: Container(
+                  child: Text(
+                nome,
+                style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 12.0,
+                    fontWeight: FontWeight.bold),
+              )),
+            ),
+          ],
         ),
         SizedBox(height: 5.0),
         Container(
             child: Text(
           end,
           style: TextStyle(
-            color: Colors.white,
-            fontSize: 12,
+            color: Theme.of(context).primaryColor,
+            fontSize: 10,
           ),
         )),
         SizedBox(height: 5.0),
-        Container(
-            child: Text(
-          bairro,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 12.0,
-          ),
-        )),
+        
       ],
     );
-  }
+  }*/
 
   Widget _buildGoogleMap(BuildContext context) {
     return Container(
@@ -211,7 +217,10 @@ class MapaClienteState extends State<MapaCliente> {
           mapToolbarEnabled: true,
           tiltGesturesEnabled: true,
           initialCameraPosition:
-              CameraPosition(target: LatLng(-1.4241198, -48.4647034), zoom: 14),
+              CameraPosition(
+              target: LatLng(double.parse(chamadasController.lat.value),
+                  double.parse(chamadasController.lng.value)),
+              zoom: 14),
           onMapCreated: (GoogleMapController controller) {
             if (!_controller.isCompleted) {
               //first calling is false
