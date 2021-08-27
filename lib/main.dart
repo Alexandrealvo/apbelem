@@ -1,5 +1,6 @@
 import 'package:apbelem/modules/Chamadas/chamadas.dart';
 import 'package:apbelem/modules/Chamadas/status_cliente.dart';
+import 'package:apbelem/modules/Esqueci/esqueci_senha.dart';
 import 'package:apbelem/modules/Home/home_page.dart';
 import 'package:apbelem/modules/Mapa/mapa_cliente.dart';
 import 'package:apbelem/modules/Perfil/perfil.dart';
@@ -51,6 +52,11 @@ void main() {
       GetPage(
         name: '/mapacliente',
         page: () => MapaCliente(),
+       
+      ),
+       GetPage(
+        name: '/esqueci',
+        page: () => Esqueci(),
        
       ),
     ],

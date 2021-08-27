@@ -14,16 +14,20 @@ class MapaCliente extends StatefulWidget {
 class MapaClienteState extends State<MapaCliente> {
   ChamadasController chamadasController = Get.put(ChamadasController());
   Completer<GoogleMapController> _controller = Completer();
-  //List<Dados_Clientes> clientes = <Dados_Clientes>[];
-  bool isLoading = false;
-  bool isSearching = false;
+  bool isLoading = true;
+  BitmapDescriptor pinLocationIcon;
   Set<Marker> _markers = {};
 
   @override
   void initState() {
     super.initState();
-    _getClientes();
-    clientesNum();
+     _getClientes();
+    setCustomMapPin();
+  }
+
+  void setCustomMapPin() async {
+    pinLocationIcon = await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(devicePixelRatio: 2.5), 'images/clientes.png');
   }
 
   _getClientes() {
@@ -35,29 +39,9 @@ class MapaClienteState extends State<MapaCliente> {
           title: chamadasController.nomecliente.value,
           snippet: "${chamadasController.endereco.value}",
         ),
-        icon: BitmapDescriptor.defaultMarkerWithHue(
-          BitmapDescriptor.hueRed,
-        )));
-
+        icon: pinLocationIcon));
     isLoading = false;
   }
-
-  clientesNum() {}
-
-  var search = TextEditingController();
-  var searchResult = [];
-
-  /*onSearchTextChanged(String text) {
-    searchResult.clear();
-    if (text.isEmpty) {
-      return;
-    }
-    clientes.forEach((details) {
-      if (details.nome_cliente.toLowerCase().contains(text.toLowerCase()))
-        searchResult.add(details);
-      setState(() {});
-    });
-  }*/
 
   double zoomVal = 5.0;
   @override
@@ -137,8 +121,7 @@ class MapaClienteState extends State<MapaCliente> {
     );
   }
 
-  Widget _boxes(
-      double lat, double long, String nome, String end) {
+  Widget _boxes(double lat, double long, String nome, String end) {
     return GestureDetector(
       onTap: () {
         _gotoLocation(lat, long);
@@ -147,21 +130,20 @@ class MapaClienteState extends State<MapaCliente> {
         child: new FittedBox(
           child: Material(
               color: Theme.of(context).buttonColor,
-              elevation: 10,
-              borderRadius: BorderRadius.circular(15),
-              shadowColor: Color(0x802196F3),
+              elevation: 12,
+              borderRadius: BorderRadius.circular(10),
+              shadowColor: Colors.black,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Container(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(5),
                     child: Icon(
-                      Icons.adjust,
-                      size: 30,
+                      Icons.center_focus_weak,
+                      size: 40,
                       color: Theme.of(context).primaryColor,
                     ),
                   ),
-                  
                 ],
               )),
         ),
@@ -216,23 +198,15 @@ class MapaClienteState extends State<MapaCliente> {
           rotateGesturesEnabled: true,
           mapToolbarEnabled: true,
           tiltGesturesEnabled: true,
-          initialCameraPosition:
-              CameraPosition(
+          initialCameraPosition: CameraPosition(
               target: LatLng(double.parse(chamadasController.lat.value),
                   double.parse(chamadasController.lng.value)),
               zoom: 14),
           onMapCreated: (GoogleMapController controller) {
             if (!_controller.isCompleted) {
-              //first calling is false
-              //call "completer()"
-
               _controller.complete(controller);
-            } else {
-              //other calling, later is true,
-              //don't call again complet
-            }
+            } else {}
             changeMapMode();
-            //_controller.complete(controller);
           },
           markers: _markers,
         ));
@@ -243,8 +217,8 @@ class MapaClienteState extends State<MapaCliente> {
     controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
       target: LatLng(lat, long),
       zoom: 16,
-      tilt: 50.0,
-      bearing: 45.0,
+      tilt: 40,
+      bearing: 40,
     )));
   }
 }
