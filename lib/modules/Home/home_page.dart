@@ -8,6 +8,7 @@ import 'package:edge_alert/edge_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_open_whatsapp/flutter_open_whatsapp.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,7 +18,6 @@ import 'package:flutter/widgets.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
-
 
 class HomePage extends StatefulWidget {
   @override
@@ -190,8 +190,8 @@ class _HomePageState extends State<HomePage> {
   getImage(ImageSource source) async {
     this.setState(() {});
     PickedFile image = await _picker.getImage(source: source);
-   // XFile image = await _picker.pickImage(source: source);
-  
+    // XFile image = await _picker.pickImage(source: source);
+
     if (image != null) {
       File cropped = await ImageCropper.cropImage(
           sourcePath: image.path,
@@ -457,10 +457,9 @@ class _HomePageState extends State<HomePage> {
                             size: 22,
                           ),
                           onTap: () {
-                            homePageController.launched =
-                                homePageController.launchInBrowser(
-                              'https://api.whatsapp.com/send?phone=5591981220670',
-                            );
+                            print('what');
+                            FlutterOpenWhatsapp.sendSingleMessage(
+                                "5591981220670", "Hello");
                           },
                         ),
                       ),

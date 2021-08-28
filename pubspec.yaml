@@ -4,7 +4,7 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.7.0 <3.0.3"
 
 dependencies:
   flutter:
@@ -19,7 +19,7 @@ dependencies:
   image_cropper: ^1.4.0
   image_picker: ^0.7.2
   get_storage: null
-  http: ^0.13.0
+  http: ^0.13.3
   edge_alert: ^0.0.1
   url_launcher: ^6.0.2
   pull_to_refresh: ^2.0.0

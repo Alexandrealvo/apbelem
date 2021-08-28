@@ -88,6 +88,7 @@ class _ChamadasState extends State<Chamadas> {
           icon: Icons.highlight_off);
     }
   }
+  
 
   void _configurandoModalBottomSheet(
       context,
@@ -345,7 +346,7 @@ class _ChamadasState extends State<Chamadas> {
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Text(
-                                              'Localização',
+                                              'Mapa',
                                               style: TextStyle(
                                                 color: Theme.of(context)
                                                     .primaryColor,

@@ -24,7 +24,7 @@ class StatusController extends GetxController {
 
   getStatusCliente(String idchamada, String statuscliente) async {
     LoginController loginController = Get.put(LoginController());
-    StatusController statusController = Get.put(StatusController());
+    //StatusController statusController = Get.put(StatusController());
     //ChamadasController chamadasController = Get.put(ChamadasController());
 
     isLoading(true);

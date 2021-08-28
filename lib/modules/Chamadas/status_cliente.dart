@@ -3,7 +3,7 @@ import 'package:apbelem/modules/Chamadas/status_controller.dart';
 import 'package:apbelem/utils/alert_button_check.dart';
 import 'package:apbelem/utils/alert_button_pressed.dart';
 import 'package:apbelem/utils/custom_text_field.dart';
-import 'package:apbelem/utils/edge_alert.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';

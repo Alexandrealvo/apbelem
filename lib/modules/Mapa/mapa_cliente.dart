@@ -22,7 +22,7 @@ class MapaClienteState extends State<MapaCliente> {
   void initState() {
     super.initState();
      _getClientes();
-    setCustomMapPin();
+   // setCustomMapPin();
   }
 
   void setCustomMapPin() async {
@@ -39,7 +39,9 @@ class MapaClienteState extends State<MapaCliente> {
           title: chamadasController.nomecliente.value,
           snippet: "${chamadasController.endereco.value}",
         ),
-        icon: pinLocationIcon));
+        icon: BitmapDescriptor.defaultMarkerWithHue(
+          BitmapDescriptor.hueViolet,
+        )));
     isLoading = false;
   }
 
