@@ -457,9 +457,9 @@ class _HomePageState extends State<HomePage> {
                             size: 22,
                           ),
                           onTap: () {
-                            print('what');
-                            FlutterOpenWhatsapp.sendSingleMessage(
-                                "5591981220670", "Hello");
+                            homePageController.launched =
+                                homePageController.launchInBrowser(
+                                    'https://api.whatsapp.com/send?phone=5591981220670&text=Hello');
                           },
                         ),
                       ),
